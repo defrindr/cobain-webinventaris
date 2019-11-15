@@ -1,0 +1,43 @@
+.pagination > .page-link,
+.pagination > .page-item > .page-link {
+  padding: 8px;
+  border-radius: 5px;
+  margin: 0 1px;
+}
+
+.pagination > .page-item > .page-link {
+  background: #E3342F;
+  color: #fff;
+  border: 1px solid #EE342F;
+}
+
+.pagination > .page-link {
+  background: #3490DC;
+  color: #fff;
+}
+
+.pagination > .page-link:hover {
+  background: #347091;
+  color: #fff;
+}
+
+.pagination > li > a,
+.pagination > li > span {
+  float: none !important;
+}
+
+.pagination > .active > a,
+.pagination > .active > a:focus,
+.pagination > .active > a:hover,
+.pagination > .active > span,
+.pagination > .active > span:focus,
+.pagination > .active > span:hover,
+.pagination > .disabled > a,
+.pagination > .disabled > a:focus,
+.pagination > .disabled > a:hover,
+.pagination > .disabled > span,
+.pagination > .disabled > span:focus,
+.pagination > .disabled > span:hover {
+  background: #A3342F;
+}
+

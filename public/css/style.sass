@@ -1,0 +1,97 @@
+body
+    color: #000
+    background: #efefef
+    .container
+        display: block
+        width: 450px
+        padding-top: 20vh
+        height: 70vh
+        margin: 0 auto
+        .error
+            background: #bb4040
+            margin: 10px 0
+            padding: 10px 20px
+            border-radius: 5px
+            color: #eee
+        .box
+            background: #ffffff
+            box-shadow: 0 0 5px 1px rgb(200,200,200 )
+            border-radius: 5px
+            .box-head
+                background: #1775b4
+                color: #ffffff
+                border-radius: 5px 5px 0 0
+                padding: 25px 0
+                .title
+                    display: block
+                    font-size: 18px
+                    text-align: center
+            .box-body
+                position: relative
+                padding-top: 20px
+                border-top: 8px solid #3ec460
+                .icon
+                    font-size: 20px
+                    background: #3ec460
+                    color: #fff
+                    padding: 10px 13px
+                    margin: -44px 46%
+                    position: absolute
+                    border-radius: 100%
+                .form
+                    text-align: center
+                    .anu
+                        margin: 0 auto
+                        position: relative
+                        display: inline
+                        .form-control
+                            display: inline
+                            padding: 5px 17px 5px 5px
+                        .showing
+                            position: absolute
+                            top: 0
+                            font-size: 12px
+                            right: 5px
+                            color: #3e579e
+                    .form-control
+                        margin: 10px auto
+                        padding: 5px 17px 5px 5px
+                        border-radius: 5px
+                        border: 1px solid #aaa
+                        background: #ddd
+                        color: #666
+                        display: block
+                        &:focus
+                            outline: none !important
+                            box-shadow: none !important
+                    ::placeholder
+                        color: #666
+                    .btn
+                        padding: 5px
+                        background: #1775b4
+                        border: 0
+                        width: 100px
+                        border-radius: 5px
+                        color: #fff
+            .box-footer
+                display: block
+                padding: 10px
+                text-align: center
+                color: #888
+                font-size: 12px
+@media screen and (max-width: 625px)
+    body
+        .container
+            display: block
+            width: 70%
+            padding-top: 15vh
+            height: 70vh
+            margin: 0 auto
+            .box
+                .box-body
+                    min-height: 30vh
+                    .icon
+                        margin: -44px 42.5%
+                    .form
+                        .form-control
+                            margin: 30px auto
