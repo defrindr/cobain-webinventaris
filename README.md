@@ -2,6 +2,17 @@
 
 Project Inventaris Barang Sederhana.
 
+## Table Of Content
+
+- [Inventaris Barang](#inventaris-barang)
+  - [Table Of Content](#table-of-content)
+  - [Features](#features)
+    - [User Role](#user-role)
+  - [Database](#database)
+  - [Installation](#installation)
+  - [Contributing](#contributing)
+  - [License](#license)
+
 ## Features
 
 * Multi Role
