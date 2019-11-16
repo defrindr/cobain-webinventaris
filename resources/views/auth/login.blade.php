@@ -18,7 +18,7 @@
                 @endif
             <div class="box">
                 <div class="box-head">
-                    <div class="title">Login</div>
+                    <div class="title">Login Inventaris Barang</div>
                 </div>
                 <div class="box-body">
                     <i class="icon fa fa-user"></i>
