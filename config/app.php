@@ -68,7 +68,7 @@ return [
     */
 
     // Indonesian Timezone
-    'timezone' => 'WIB',
+    'timezone' => 'Asia/Jakarta',
 
     /*
     |--------------------------------------------------------------------------
