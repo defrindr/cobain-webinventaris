@@ -8,11 +8,31 @@ Project Inventaris Barang Sederhana.
 * Peminjaman
 * Etc
 
-## User Role
+### User Role
 
 * Administrator
 * Operator
 * Pegawai
+
+## Database
+
+[Database Inventaris.sql](db_inventaris.sql)
+
+## Installation
+
+1. Clone repo ini.
+
+```
+git clone https://github.com/defrindr/inventaris-barang-SLKSSekolah.git
+```
+
+2. Buat database baru, kemudian import [database ini](#database).
+
+3. Jalankan Server
+
+```
+php artisan serve
+```
 
 ## Contributing
 
