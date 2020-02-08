@@ -30,6 +30,12 @@
                   <span>Inventaris</span>
                 </a>
               </li>
+              <li>
+                <a href="{{ route('report.index') }}">
+                  <i class="fa fa-bookmark"></i>
+                  <span>Report</span>
+                </a>
+              </li>
               
               <li class="treeview menu-close">
                 <a href="#">

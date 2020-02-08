@@ -28,11 +28,11 @@ Route::post('/admin-logout',
         ->middleware('Role:Administrator-Operator-Peminjam')
         ->name('auth.logout');
 
-
-Route::get('/DownloadLaporanP','ReportController@downloadReportPeminjaman');
-Route::get('/DownloadLaporanI','ReportController@downloadReportInventaris');
-Route::get('/DownloadLaporanJ','ReportController@downloadReportJenis');
-Route::get('/DownloadLaporanR','ReportController@downloadReportRuang');
+Route::get('/report','ReportController@index')->name('report.index');
+Route::get('/DownloadLaporanP','ReportController@downloadReportPeminjaman')->name('report.peminjaman');
+Route::get('/DownloadLaporanI','ReportController@downloadReportInventaris')->name('report.inventaris');
+Route::get('/DownloadLaporanJ','ReportController@downloadReportJenis')->name('report.jenis');
+Route::get('/DownloadLaporanR','ReportController@downloadReportRuang')->name('report.ruang');
 
 
 
