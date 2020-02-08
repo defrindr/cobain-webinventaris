@@ -16,4 +16,10 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
 Route::get('/inventaris/{id}','\App\Http\Controllers\Apis\InventarisController@index')->name('apis.inventaris');
+
+Route::get('/inventaris','\App\Http\Controllers\Apis\InventarisController@cat')->name('apis.inventaris_list');
+
+
+Route::get('/inventaris/jenis/{id}','\App\Http\Controllers\Apis\InventarisController@jenis')->name('apis.inventaris_jenis');

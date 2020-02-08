@@ -15,7 +15,7 @@ class Operator
      */
     public function handle($request, Closure $next)
     {
-        if (\Auth::check() && (\Auth::user()->level->nama_level == 'Administrator' or \Auth::user()->level->nama_level == 'Operator')){
+        if (\Auth::check() && (/*\Auth::user()->level->nama_level == 'Administrator' or*/ \Auth::user()->level->nama_level == 'Operator')){
             return $next($request);
         } else {
             return abort(403, 'Izin ditolak.');

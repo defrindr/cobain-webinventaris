@@ -12,6 +12,7 @@ class PegawaiModel extends Model
         "nama_pegawai",
         "nip",
         "alamat",
+        "status",
         'id_user'
     ];
 

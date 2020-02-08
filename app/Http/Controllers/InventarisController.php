@@ -75,7 +75,7 @@ class InventarisController extends Controller
             "keterangan" => $request->keterangan,
             "jumlah" => $request->jumlah,
             "tanggal_register" => $request->tanggal_register,
-            "kode_inventaris" => "J". $jenis->kode_jenis."-R". $ruang->kode_ruang,
+            "kode_inventaris" => Date('d',strtotime(now())).Date('m',strtotime(now())).Date('Y',strtotime(now()))."-J". $jenis->kode_jenis."-R". $ruang->kode_ruang."-P".\Auth::user()->petugas->id."-B".random_int(0,100),
             "id_jenis" => $request->id_jenis,
             "id_ruang" => $request->id_ruang,
             "id_petugas" => \Auth::user()->petugas->id,

@@ -25,6 +25,8 @@ class PegawaiController extends Controller
     public function index()
     {
         $pegawai = PegawaiModel::paginate(5);
+
+
         return view('pegawai.index', [
                 'pegawai' => $pegawai
             ]);
@@ -89,6 +91,7 @@ class PegawaiController extends Controller
                     "nip" => $request->nip,
                     "alamat" => $request->alamat,
                     "id_user" => $user->id,
+                    "status" => 0,
                 ]);
             if ($pegawai->save()) 
             {
@@ -183,5 +186,22 @@ class PegawaiController extends Controller
                 ->route('pegawai.index')
                 ->with('error', 'Pegawai gagal dihapus');
         }
+    }
+
+    public function switchStatusAccount(Request $r,$id){
+        $pegawai = PegawaiModel::findOrFail($id);
+        $messages = "";
+
+        if($pegawai->status){
+            $pegawai->status = 0;
+            $messages = "tidak aktif";
+            $pegawai->update();
+        }else{
+            $pegawai->status = 1;
+            $messages = "aktif";
+            $pegawai->update();
+        }
+        return redirect()->route('pegawai.index')
+                ->with('success','Status pegawai diubah menjadi "'.$messages.'"');
     }
 }

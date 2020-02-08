@@ -12,8 +12,10 @@
     <div class="box box-success">
         <div class="box-header">
             @include('layouts.alert')
-            <a href="{{ route('peminjaman.create') }}" class="btn btn-success">Tambah Peminjaman</a>
-            <a href="{{ route('peminjaman.history') }}" class="btn text-white btn-warning">History Peminjaman</a>
+            <a href="{{ route('peminjaman.create') }}" class="btn mb-1 btn-success">Tambah Peminjaman</a>
+            <a href="{{ route('peminjaman.pinjam') }}" class="btn mb-1 text-white btn-warning">Peminjaman Disetujui</a>
+            <a href="{{ route('peminjaman.reqKembali') }}" class="btn mb-1 text-white btn-warning">Requested Kembali</a>
+            <a href="{{ route('peminjaman.history') }}" class="btn mb-1 text-white btn-warning">History Peminjaman</a>
         </div>
         <div class="box-body">
             <table class="table table-bordered table-striped table-responsive-lg">
@@ -47,7 +49,7 @@
                         </td>
                         @if((\Auth::user()->level->nama_level == "Administrator") or (\Auth::user()->level->nama_level == "Operator"))
                             <td>
-                                <a href="{{ route('peminjaman.kembali',$row->id) }}"><i class="fa fa-bell text-warning"></i></a>
+                                <a href="{{ route('peminjaman.acceptPinjam',$row->id) }}"><i class="fa fa-bell text-warning"></i>ACC Peminjaman</a>
                             </td>
                             <td>
                                 <a href="{{ route('peminjaman.edit',$row->id) }}"><i class="fa fa-pencil"></i></a>

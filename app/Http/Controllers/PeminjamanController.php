@@ -44,12 +44,10 @@ class PeminjamanController extends Controller
         ]);
     }
 
-
-
     /**
-     * 
+     * Menamilkan Data yang telah di accept
      */
-    public function history()
+    public function IndexAcceptPinjam()
     {
         if (\Auth::user()
         ->level->nama_level == "Peminjam") 
@@ -61,6 +59,58 @@ class PeminjamanController extends Controller
         } else 
         {
             $peminjaman = PeminjamanModel::where(['status_peminjaman' => 1])
+            ->orderBy('updated_at', 'DESC')
+            ->paginate(5);
+        }
+
+        return view('peminjaman.acc-pinjam', [
+                'peminjaman' => $peminjaman,
+            ]);
+    }
+
+
+    /**
+     * Menamilkan History
+     */
+    public function IndexRequestKembali()
+    {
+        if (\Auth::user()
+        ->level->nama_level == "Peminjam") 
+        {
+            $peminjaman = PeminjamanModel::where(['status_peminjaman' => 2, "id_pegawai" => \Auth::user()
+            ->pegawai->id])
+            ->orderBy('updated_at', 'DESC')
+            ->paginate(5);
+        } else 
+        {
+            $peminjaman = PeminjamanModel::where(['status_peminjaman' => 2])
+            ->orderBy('updated_at', 'DESC')
+            ->paginate(5);
+        }
+
+        return view('peminjaman.req-kembali', [
+                'peminjaman' => $peminjaman,
+            ]);
+    }
+
+
+
+
+    /**
+     * Menamilkan History
+     */
+    public function IndexHistory()
+    {
+        if (\Auth::user()
+        ->level->nama_level == "Peminjam") 
+        {
+            $peminjaman = PeminjamanModel::where(['status_peminjaman' => 3, "id_pegawai" => \Auth::user()
+            ->pegawai->id])
+            ->orderBy('updated_at', 'DESC')
+            ->paginate(5);
+        } else 
+        {
+            $peminjaman = PeminjamanModel::where(['status_peminjaman' => 3])
             ->orderBy('updated_at', 'DESC')
             ->paginate(5);
         }
@@ -117,11 +167,16 @@ class PeminjamanController extends Controller
     {
         $pegawai = PegawaiModel::all();
         $peminjaman = PeminjamanModel::findorFail($id);
+        
+        if($peminjaman->status_peminjaman == 0){
+            return view('peminjaman.update', [
+                    'peminjaman' => $peminjaman,
+                    'pegawai' => $pegawai
+                ]);
+        }else {
+            return abort(403,'Cant access dis aktion');
+        }
 
-        return view('peminjaman.update', [
-                'peminjaman' => $peminjaman,
-                'pegawai' => $pegawai
-            ]);
     }
 
     public function update(Request $request)
@@ -130,18 +185,22 @@ class PeminjamanController extends Controller
         $peminjaman->tanggal_pinjam = $request->tanggal_pinjam;
         $peminjaman->tanggal_kembali = $request->tanggal_kembali;
         $peminjaman->updated_at = date('Y-m-d H:i:s',time());
-
-        if ($peminjaman->save()) 
-        {
-            return redirect()
-                ->route('peminjaman.index')
-                ->with('success', 'Peminjaman berhasil diubah');
-        } else 
-        {
-            return redirect()
-                ->route('peminjaman.index')
-                ->with('error', 'Peminjaman gagal dubah');
+        if($peminjaman->status_peminjaman == 0){
+            if ($peminjaman->save()) 
+            {
+                return redirect()
+                    ->route('peminjaman.index')
+                    ->with('success', 'Peminjaman berhasil diubah');
+            } else 
+            {
+                return redirect()
+                    ->route('peminjaman.index')
+                    ->with('error', 'Peminjaman gagal dubah');
+            }
+        }else {
+            return abort(403,"Cant access dis aktion");
         }
+
     }
 
 
@@ -170,41 +229,47 @@ class PeminjamanController extends Controller
     }
 
 
-
-
     public function delete($id)
     {
+        DB::beginTransaction();
         $peminjaman = PeminjamanModel::find($id);
         $detailPinjam = DetailPinjamModel::where(["id_peminjaman" => $peminjaman->id])->get();
 
-        foreach($detailPinjam as $row)
-        {
-            $inventaris = InventarisModel::find($row->id_inventaris);
-
-            if($peminjaman->status_pinjam == 0)
+        if($peminjaman->status == 0 or $peminjaman->status == 3){
+            foreach($detailPinjam as $row)
             {
-                $inventaris->jumlah += $row->jumlah;
-                $inventaris->save();
+                $inventaris = InventarisModel::find($row->id_inventaris);
+
+                if($peminjaman->status_pinjam == 0)
+                {
+                    $inventaris->jumlah += $row->jumlah;
+                    $inventaris->save();
+                }
+
+                $row->delete();
             }
 
-            $row->delete();
-        }
-
-        if ($peminjaman->delete()) 
-        {
+            if ($peminjaman->delete()) 
+            {
+                DB::commit();
+                return redirect()
+                    ->route('peminjaman.index')
+                    ->with('success', 'Peminjaman berhasil dihapus');
+            } else {
+                DB::rollBack();
+                return redirect()
+                    ->route('peminjaman.index')
+                    ->with('error', 'Peminjaman gagal dihapus');
+            }
+        }else {
             return redirect()
                 ->route('peminjaman.index')
-                ->with('success', 'Peminjaman berhasil dihapus');
-        } else 
-        {
-            return redirect()
-                ->route('peminjaman.index')
-                ->with('error', 'Peminjaman gagal dihapus');
+                ->with('error', 'Peminjaman gagal dihapus, Karena Proses Pengembalian masih belum berakhir');
         }
     }
 
 
-    public function kembali($id)
+    public function acceptPinjam($id)
     {
         DB::beginTransaction();
         $peminjaman = PeminjamanModel::find($id);
@@ -214,6 +279,61 @@ class PeminjamanController extends Controller
         if($peminjaman->status_peminjaman == 0)
         {
             $peminjaman->status_peminjaman = 1;
+
+            if($peminjaman->save())
+            {
+                DB::commit();
+                return redirect()
+                    ->route('peminjaman.index')
+                    ->with('success', 'Status peminjaman berhasil diubah menjadi "Telah Di Accept Pinjam".');
+            }
+            else{
+                DB::rollBack();
+                return redirect()
+                    ->route('peminjaman.index')
+                    ->with('error', 'Status peminjaman gagal diubah.');
+            }
+        }
+    }
+
+
+    public function requestKembali($id)
+    {
+        DB::beginTransaction();
+        $peminjaman = PeminjamanModel::find($id);
+
+        $detailPinjam = DetailPinjamModel::where(['id_peminjaman'=>$peminjaman->id])->get();
+
+        if($peminjaman->status_peminjaman == 1)
+        {
+            $peminjaman->status_peminjaman = 2;
+
+            if($peminjaman->save())
+            {
+                DB::commit();
+                return redirect()
+                    ->route('peminjaman.index')
+                    ->with('success', 'Status peminjaman berhasil diubah menjadi "Request Pengembalian".');
+            }
+            else{
+                DB::rollBack();
+                return redirect()
+                    ->route('peminjaman.index')
+                    ->with('error', 'Status peminjaman gagal diubah.');
+            }
+        }
+    }
+
+    public function kembali($id)
+    {
+        DB::beginTransaction();
+        $peminjaman = PeminjamanModel::find($id);
+
+        $detailPinjam = DetailPinjamModel::where(['id_peminjaman'=>$peminjaman->id])->get();
+
+        if($peminjaman->status_peminjaman == 2)
+        {
+            $peminjaman->status_peminjaman = 3;
             $peminjaman->tanggal_kembali = date('Y-m-d',time());
 
             /**

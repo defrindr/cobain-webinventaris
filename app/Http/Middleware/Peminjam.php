@@ -15,7 +15,7 @@ class Peminjam
      */
     public function handle($request, Closure $next)
     {
-        if (\Auth::check() && (\Auth::user()->level->nama_level == 'Administrator' or \Auth::user()->level->nama_level == 'Operator' or \Auth::user()->level->nama_level == 'Peminjam')) {
+        if (\Auth::check() && (/*\Auth::user()->level->nama_level == 'Administrator' or \Auth::user()->level->nama_level == 'Operator' or */\Auth::user()->level->nama_level == 'Peminjam')) {
             return $next($request);
         } else {
             return abort(403, 'Izin ditolak.');

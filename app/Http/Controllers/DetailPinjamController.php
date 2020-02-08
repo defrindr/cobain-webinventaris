@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\DetailPinjamModel;
 use App\Models\PeminjamanModel;
+use App\Models\RuangModel;
+use App\Models\JenisModel;
 use App\Models\InventarisModel;
 
 class DetailPinjamController extends Controller
@@ -26,11 +28,18 @@ class DetailPinjamController extends Controller
     {
         $inventaris = InventarisModel::all();
         $peminjaman = PeminjamanModel::find($id);
+        $ruang = RuangModel::orderBy('created_at','DESC')->get();
 
-        return view('detail.create',[
-                'inventaris' => $inventaris,
-                'peminjaman'=>$peminjaman
-            ]);
+        if($peminjaman->status_peminjaman == 0){
+            return view('detail.create',[
+                    'inventaris' => $inventaris,
+                    'peminjaman'=>$peminjaman,
+                    'ruang' => $ruang
+                ]);
+        }else {
+            return abort(403,'Cant access dis aksion');
+        }
+
     }
 
 
@@ -58,21 +67,31 @@ class DetailPinjamController extends Controller
             ]);
 
         // jika belum dikembalikan
-        if($peminjaman->status_peminjaman == 0) $inventaris->jumlah = $inventaris->jumlah - $request->jumlah;
-        
-        if ($inventaris->save() && $detailPinjam->save()) 
-        {
-            DB::commit();
-            return redirect()
-                ->route('peminjaman.show',$request
-                ->id_peminjaman)->with('success', 'Detail Pinjam berhasil ditambah');
-        } else 
-        {
-            DB::rollBack();
-            return redirect()
-                ->route('peminjaman.show',$request
-                ->id_peminjaman)->with('error', 'Detail Pinjam gagal ditambah');
+        if($peminjaman->status_peminjaman == 0){
+            $inventaris->jumlah = $inventaris->jumlah - $request->jumlah;
+
+
+            if($inventaris->jumlah < 0){
+                return redirect()->route('peminjaman.show')->with('error','Jumlah Yang anda masukkan terlalu banyak . Please jangan main inspect :(');
+            }
+            
+            if ($inventaris->save() && $detailPinjam->save()) 
+            {
+                DB::commit();
+                return redirect()
+                    ->route('peminjaman.show',$request
+                    ->id_peminjaman)->with('success', 'Detail Pinjam berhasil ditambah');
+            } else 
+            {
+                DB::rollBack();
+                return redirect()
+                    ->route('peminjaman.show',$request
+                    ->id_peminjaman)->with('error', 'Detail Pinjam gagal ditambah');
+            }
+        }else{
+            return abort(403,'Wowowo , ape lapo mas');
         }
+
     }
 
 
@@ -86,13 +105,18 @@ class DetailPinjamController extends Controller
         $inventaris = InventarisModel::all();
         $peminjaman = PeminjamanModel::find($detailPinjam->id_peminjaman);
         $jumlahInventaris = InventarisModel::find($detailPinjam->id_inventaris)->jumlah;
+
+        if($peminjaman->status_peminjaman == 0){
+            return view('detail.update', [
+                'detailPinjam' => $detailPinjam,
+                'inventaris' => $inventaris,
+                'peminjaman' => $peminjaman,
+                'jumlahInventaris' => $jumlahInventaris,
+                ]);
+        }else {
+            return abort(403,'Gak oleh mas ');
+        }
         
-        return view('detail.update', [
-            'detailPinjam' => $detailPinjam,
-            'inventaris' => $inventaris,
-            'peminjaman' => $peminjaman,
-            'jumlahInventaris' => $jumlahInventaris,
-            ]);
     }
 
     /**
@@ -103,29 +127,39 @@ class DetailPinjamController extends Controller
         DB::beginTransaction();
 
         $detailPinjam = DetailPinjamModel::find($request->id);
+        $peminjaman = PeminjamanModel::find($detailPinjam->id_peminjaman);
         $inventaris = InventarisModel::find($detailPinjam->id_inventaris);
-        
-        $this->validate($request,[
-                "jumlah" => "required|numeric",
-            ],$this->messages);
 
-        $inventaris->jumlah += $detailPinjam->jumlah;
-        $inventaris->jumlah -= $request->jumlah;
-        $detailPinjam->jumlah = $request->jumlah;
+        if($peminjaman->status_peminjaman == 0){
+            $this->validate($request,[
+                    "jumlah" => "required|numeric",
+                ],$this->messages);
 
-        if ($inventaris->save() && $detailPinjam->save()) 
-        {
-            DB::commit();
-            return redirect()
-                ->route('peminjaman.show',$detailPinjam->id_peminjaman)
-                ->with('success', 'Detail Pinjam berhasil diubah');
-        } else 
-        {
-            DB::rollback();
-            return redirect()
-                ->route('peminjaman.show',$detailPinjam->id_peminjaman)
-                ->with('error', 'Detail Pinjam gagal dubah');
+            $inventaris->jumlah += $detailPinjam->jumlah;
+            $inventaris->jumlah -= $request->jumlah;
+            $detailPinjam->jumlah = $request->jumlah;
+
+            if($inventaris->jumlah < 0){
+                return redirect()->route('peminjaman.show')->with('error','Jumlah Yang anda masukkan terlalu banyak . Please jangan main inspect :(');
+            }
+
+            if ($inventaris->save() && $detailPinjam->save()) 
+            {
+                DB::commit();
+                return redirect()
+                    ->route('peminjaman.show',$detailPinjam->id_peminjaman)
+                    ->with('success', 'Detail Pinjam berhasil diubah');
+            } else 
+            {
+                DB::rollback();
+                return redirect()
+                    ->route('peminjaman.show',$detailPinjam->id_peminjaman)
+                    ->with('error', 'Detail Pinjam gagal dubah');
+            }
+        }else {
+            return abort(403,'Gak oleh nakal mas ');
         }
+
     }
 
 
@@ -146,7 +180,7 @@ class DetailPinjamController extends Controller
         /*
          * Jika Sudah dikembalikan
          */
-        if($peminjaman->status_peminjaman == 1)
+        if($peminjaman->status_peminjaman == 3)
         {
             if ($detailPinjam->delete()) 
             {
@@ -165,7 +199,7 @@ class DetailPinjamController extends Controller
         /*
          * Jika Belum dikembalikan
          */
-        else{
+        else if($peminjaman->status_peminjaman == 0){
             $inventaris->jumlah = $inventaris->jumlah + $detailPinjam->jumlah;
             if ($inventaris->save() && $detailPinjam->delete()) 
             {
@@ -180,6 +214,10 @@ class DetailPinjamController extends Controller
                     ->route('peminjaman.show',$id_peminjaman)
                     ->with('error', 'Detail Pinjam gagal dihapus');
             }
+        }else {
+            return redirect()
+                    ->route('peminjaman.show',$id_peminjaman)
+                    ->with('error', 'Anda masih berada dalam proses peminjaman, tidak dapat melakukan action ini');
         }
     }
 }

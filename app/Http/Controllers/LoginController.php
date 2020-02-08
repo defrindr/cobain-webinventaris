@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use App\Models\PegawaiModel;
 
 Class LoginController extends BaseController{
     use AuthenticatesUsers;
@@ -36,6 +37,24 @@ Class LoginController extends BaseController{
                 case "Administrator":
                     return redirect()
                         ->route('inventaris.index');
+                    break;
+                case "Peminjam":
+                        $pegawai = PegawaiModel::where(['id_user' => \Auth::user()->id])->get();
+                        if(count($pegawai) < 0){
+                            return redirect()
+                                ->route('auth.formLogin')
+                                ->with('error','Akun Peminjam Tidak ditemukan');
+                        }else {
+                            if($pegawai[0]->status){
+                                return redirect()
+                                    ->route('peminjaman.index');
+                            }else {
+                                \Auth::logout();
+                                return redirect()
+                                    ->route('auth.formLogin')
+                                    ->with('error','Akun Peminjam belum aktif');
+                            }
+                        }
                     break;
                 default:
                     return redirect()

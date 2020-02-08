@@ -18,5 +18,22 @@ class MyHelper {
             return false;
         }
     }
+
+    public static function isPeminjam()
+    {
+        if (\Auth::user()->level->nama_level == "Peminjam") {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public static function statusChange($var,$arg1,$arg2){
+        if($var){
+            return $arg1;
+        }else {
+            return $arg2;
+        }
+    }
 }
 ?>

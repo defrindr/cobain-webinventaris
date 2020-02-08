@@ -13,7 +13,7 @@
             @endif
             <div class="form-group">
                 <label for="id_pegawai">ID Pegawai</label>
-                <select name="id_pegawai" id="id_pegawai" class="form-control">
+                <select name="id_pegawai" id="id_pegawai" class="form-control" disabled>
                     @foreach ($pegawai as $row)
                         <option @if($row->id == $peminjaman->id_pegawwai) selected @endif value="{{ $row->id }}">{{ $row->nama_pegawai }}</option>
                     @endforeach

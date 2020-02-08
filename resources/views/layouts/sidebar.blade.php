@@ -57,6 +57,14 @@
                     </a>
                   </li>
                 @else
+                  @if(\App\Helpers\MyHelper::isOperator())
+                  <li>
+                    <a href="{{ route('pegawai.index') }}">
+                      <i class="fa fa-user"></i>
+                      <span>Pegawai</span>
+                    </a>
+                  </li>
+                  @endif
                   <li>
                     <form action="/admin-logout" method="post"> @csrf @method("POST") <button class="btn btn-danger text-white" style="margin:10px;width: 90%;">Logout</button></form>
                   </li>
