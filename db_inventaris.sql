@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Nov 15, 2019 at 06:29 PM
--- Server version: 10.1.41-MariaDB-0ubuntu0.18.04.1
--- PHP Version: 7.2.22-1+ubuntu18.04.1+deb.sury.org+1
+-- Generation Time: Feb 08, 2020 at 12:04 PM
+-- Server version: 10.1.43-MariaDB-0ubuntu0.18.04.1
+-- PHP Version: 7.3.14-5+ubuntu18.04.1+deb.sury.org+2
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -42,7 +42,16 @@ CREATE TABLE `detail_pinjam` (
 --
 
 INSERT INTO `detail_pinjam` (`id`, `jumlah`, `created_at`, `updated_at`, `id_peminjaman`, `id_inventaris`) VALUES
-(26, '12', '2019-11-15 18:15:27', '2019-11-15 18:18:39', 20, 8);
+(28, '12', '2020-02-03 09:07:49', '2020-02-03 09:09:33', 23, 8),
+(29, '1', '2020-02-03 09:09:42', '2020-02-03 09:09:42', 23, 9),
+(30, '50', '2020-02-03 09:12:11', '2020-02-03 09:12:11', 24, 8),
+(31, '20', '2020-02-03 09:12:25', '2020-02-03 09:12:25', 24, 8),
+(32, '12', '2020-02-03 09:32:17', '2020-02-03 09:32:17', 25, 8),
+(33, '12', '2020-02-03 09:32:27', '2020-02-03 09:32:27', 25, 8),
+(35, '23', '2020-02-03 11:36:27', '2020-02-03 11:36:27', 26, 8),
+(36, '12', '2020-02-04 10:44:38', '2020-02-04 10:47:38', 28, 10),
+(37, '10', '2020-02-04 10:44:47', '2020-02-04 10:44:47', 28, 12),
+(38, '7', '2020-02-04 15:22:34', '2020-02-04 15:22:34', 29, 9);
 
 -- --------------------------------------------------------
 
@@ -70,8 +79,14 @@ CREATE TABLE `inventaris` (
 --
 
 INSERT INTO `inventaris` (`id`, `nama`, `kondisi`, `keterangan`, `jumlah`, `tanggal_register`, `kode_inventaris`, `created_at`, `updated_at`, `id_jenis`, `id_ruang`, `id_petugas`) VALUES
-(8, 'Sepatu Kaca', 'Rusak', 'Sangat sangat sangat baik', 108, '2019-11-15', 'J160610-R98176', '2019-11-15 18:13:31', '2019-11-15 18:18:39', 4, 7, 1),
-(9, 'Adidas', 'Baik', 'Baik', 12, '2019-11-15', 'J160610-R77210', '2019-11-15 18:13:45', '2019-11-15 18:13:45', 4, 11, 1);
+(8, 'Sepatu Kaca', 'Rusak', 'Sangat sangat sangat baik', 100, '2019-11-15', 'J160610-R98176', '2019-11-15 18:13:31', '2020-02-04 10:47:02', 4, 7, 1),
+(9, 'Adidas', 'Baik', 'Baik', 7, '2019-11-15', 'J160610-R77210', '2019-11-15 18:13:45', '2020-02-04 15:22:34', 4, 11, 1),
+(10, 'Nike', 'Baik', '-', 12, '2020-02-03', 'J160610-R98176', '2020-02-03 11:29:19', '2020-02-04 11:07:45', 4, 7, 1),
+(11, 'Rusak', 'Baik', '-', 1, '2020-02-03', 'J160610-R98176', '2020-02-03 11:29:55', '2020-02-03 11:29:55', 4, 7, 1),
+(12, 'Blitar EDU', 'Baik', '-', 100, '2020-02-03', '03022020-J160610-R98176-P1-B6', '2020-02-03 11:41:49', '2020-02-04 11:07:45', 4, 7, 1),
+(13, 'kj', 'Hilang', 'up', 1, '2020-02-03', '03022020-J05339-R42541-P1-B17', '2020-02-03 11:58:18', '2020-02-03 11:58:18', 7, 10, 1),
+(14, '12uwu', 'Baik', 'Hukum yang dibuat oleh pusat pemerintahan', 1, '2020-02-03', '03022020-J05339-R42541-P1-B10', '2020-02-03 11:58:58', '2020-02-03 11:58:58', 7, 10, 1),
+(15, 'Defri Indra Mahardika', 'Baik', 'uwu', 4, '2020-02-03', '03022020-J05339-R42541-P1-B74', '2020-02-03 12:01:21', '2020-02-03 12:01:21', 7, 10, 1);
 
 -- --------------------------------------------------------
 
@@ -95,7 +110,8 @@ CREATE TABLE `jenis` (
 INSERT INTO `jenis` (`id`, `nama_jenis`, `kode_jenis`, `keterangan`, `created_at`, `updated_at`) VALUES
 (4, 'Sepatu', '160610', 'Baru Uy', '2019-11-15 18:07:53', '2019-11-15 18:07:53'),
 (5, 'Baju', '891016', 'Sangat sangat sangat baik', '2019-11-15 18:08:03', '2019-11-15 18:08:03'),
-(6, 'Celana', '22312', 'Baik1', '2019-11-15 18:09:20', '2019-11-15 18:09:20');
+(6, 'Celana', '22312', 'Baik1', '2019-11-15 18:09:20', '2019-11-15 18:09:20'),
+(7, 'Otomotif', '05339', 'Alat sepeda motor', '2020-02-03 11:57:34', '2020-02-03 11:57:34');
 
 -- --------------------------------------------------------
 
@@ -130,6 +146,7 @@ CREATE TABLE `pegawai` (
   `nama_pegawai` varchar(100) DEFAULT NULL,
   `nip` varchar(45) DEFAULT NULL,
   `alamat` text,
+  `status` int(11) NOT NULL COMMENT '0 = not active , 1 = active',
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL,
   `id_user` int(11) NOT NULL
@@ -139,10 +156,12 @@ CREATE TABLE `pegawai` (
 -- Dumping data for table `pegawai`
 --
 
-INSERT INTO `pegawai` (`id`, `nama_pegawai`, `nip`, `alamat`, `created_at`, `updated_at`, `id_user`) VALUES
-(4, 'Renaldi Arfi S', '3916969114303160', 'Ds. Kabut, Konohagakure', '2019-11-15 17:29:11', '2019-11-15 17:30:04', 24),
-(5, 'Muhammad Choirul Fachruddin', '5694883949537346', 'Ds. Hujan, Konohagakure', '2019-11-15 17:30:50', '2019-11-15 17:30:50', 25),
-(6, 'Arsyad Rifa\'i', '4335012366348391', 'Ds. Kabut, Konohagakure', '2019-11-15 17:31:22', '2019-11-15 17:31:22', 26);
+INSERT INTO `pegawai` (`id`, `nama_pegawai`, `nip`, `alamat`, `status`, `created_at`, `updated_at`, `id_user`) VALUES
+(4, 'Renaldi Arfi S', '3916969114303160', 'Ds. Kabut, Konohagakure', 1, '2019-11-15 17:29:11', '2019-11-15 17:30:04', 24),
+(5, 'Muhammad Choirul Fachruddin', '5694883949537346', 'Ds. Hujan, Konohagakure', 1, '2019-11-15 17:30:50', '2019-11-15 17:30:50', 25),
+(6, 'Arsyad Rifa\'i', '4335012366348391', 'Ds. Kabut, Konohagakure', 1, '2019-11-15 17:31:22', '2019-11-15 17:31:22', 26),
+(7, 'testPegawai', '2932764962782104', 'Jalan Serenggek kudu jeung harti', 0, '2020-02-04 11:48:54', '2020-02-08 07:21:34', 34),
+(8, 'testPegawai2', '1881650692383840', 'jalan panjang terbentang', 0, '2020-02-08 07:06:02', '2020-02-08 07:06:02', 39);
 
 -- --------------------------------------------------------
 
@@ -165,7 +184,13 @@ CREATE TABLE `peminjaman` (
 --
 
 INSERT INTO `peminjaman` (`id`, `tanggal_pinjam`, `tanggal_kembali`, `status_peminjaman`, `created_at`, `updated_at`, `id_pegawai`) VALUES
-(20, '2019-11-15', NULL, 0, '2019-11-15 18:15:14', '2019-11-15 18:15:14', 4);
+(23, '2020-02-03', '2020-02-03', 1, '2020-02-03 09:07:28', '2020-02-03 09:07:28', 4),
+(24, '2020-02-03', '2020-02-04', 3, '2020-02-03 09:11:55', '2020-02-03 09:11:55', 4),
+(25, '2020-02-03', '2020-02-03', 1, '2020-02-03 09:32:04', '2020-02-03 09:32:04', 5),
+(26, '2020-02-03', NULL, 0, '2020-02-03 11:36:16', '2020-02-03 11:36:16', 5),
+(27, '2020-02-03', NULL, 0, '2020-02-03 11:47:49', '2020-02-03 11:47:49', 6),
+(28, '2020-02-04', '2020-02-04', 3, '2020-02-04 10:41:49', '2020-02-04 10:41:49', 4),
+(29, '2020-02-04', NULL, 0, '2020-02-04 12:58:51', '2020-02-04 12:58:51', 4);
 
 -- --------------------------------------------------------
 
@@ -240,7 +265,9 @@ INSERT INTO `user` (`id`, `username`, `password`, `created_at`, `updated_at`, `i
 (25, 'fachrud1n', '$2y$10$/dcII1pqQN6zecxXShbVx.97NfykJ0gPSAj97U6FtPWo4MMzsP4s6', '2019-11-15 17:30:50', '2019-11-15 17:30:50', 6),
 (26, 'ars5y4d', '$2y$10$rrXfpvjL27H3a3o2.c5FAuOAMbR541tV0HQ/QcX90DD1xicpKVaOO', '2019-11-15 17:31:22', '2019-11-15 17:31:22', 6),
 (27, 'defri', '$2y$10$6mzbGkmy/dG5uufS.YUDpukn0WC5G1.nZIMEPnc4i2lMSH.ws3S1a', '2019-11-15 17:32:09', '2019-11-15 17:32:09', 3),
-(33, 'user519020', '$2y$10$pYrYTo/s59FhAhjg0yTbuO4b7nkffvHOnbu4NPwkgnDqEdgW04lCS', '2019-11-15 17:49:49', '2019-11-15 17:49:49', 3);
+(33, 'user519020', '$2y$10$pYrYTo/s59FhAhjg0yTbuO4b7nkffvHOnbu4NPwkgnDqEdgW04lCS', '2019-11-15 17:49:49', '2019-11-15 17:49:49', 3),
+(34, 'testPegawai', '$2y$10$95n7E8hPeUm8gwrrVK5Z9urnPirIS4sA9w.B80ouygGdnkmonZbcy', '2020-02-04 11:48:54', '2020-02-04 11:48:54', 6),
+(39, 'testPegawai2', '$2y$10$qnCvYIpE7WZZLTvFVjirQu6ikaYth5IQfebobDrKgd5OR2sy4zvnm', '2020-02-08 07:06:02', '2020-02-08 07:06:02', 6);
 
 --
 -- Indexes for dumped tables
@@ -318,19 +345,19 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `detail_pinjam`
 --
 ALTER TABLE `detail_pinjam`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 
 --
 -- AUTO_INCREMENT for table `inventaris`
 --
 ALTER TABLE `inventaris`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `jenis`
 --
 ALTER TABLE `jenis`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `level`
@@ -342,13 +369,13 @@ ALTER TABLE `level`
 -- AUTO_INCREMENT for table `pegawai`
 --
 ALTER TABLE `pegawai`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `peminjaman`
 --
 ALTER TABLE `peminjaman`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT for table `petugas`
@@ -366,7 +393,7 @@ ALTER TABLE `ruang`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 
 --
 -- Constraints for dumped tables
