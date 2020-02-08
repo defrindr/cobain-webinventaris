@@ -4,6 +4,8 @@ use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use App\Models\PegawaiModel;
+use App\Helpers\MyHelper;
+
 
 Class LoginController extends BaseController{
     use AuthenticatesUsers;
@@ -23,15 +25,16 @@ Class LoginController extends BaseController{
      * Proses Login
      */
     public function login(Request $request){
+
         if (
             \Auth::attempt([
                 'username' => $request->username,
                 'password' => $request->password]))
         {
+            MyHelper::logging($request);
             $auth = \Auth::user()
                 ->level
                 ->nama_level;
-
             switch($auth) 
             {
                 case "Administrator":
@@ -63,11 +66,13 @@ Class LoginController extends BaseController{
             }
         } else 
         {
+            MyHelper::logging($request);
             return redirect()
                 ->route('auth.formLogin')
                 ->with('error','Username / Password salah');
         }
     }
+
 
 
 

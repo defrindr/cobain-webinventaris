@@ -17,7 +17,7 @@ class Role
     {
     	$lanjut = false;
     	$roles = explode('-', $role);
-    	// dd($roles);
+
 
     	foreach ($roles as $role) {
 			if (\Auth::check() && \Auth::user()->level->nama_level == $role) {
@@ -27,9 +27,11 @@ class Role
 
 
     	if($lanjut){
+            \App\Helpers\MyHelper::logging($request);
             return $next($request);
     	}else {
             return abort(403, 'Izin ditolak.');
         }
     }
+
 }
