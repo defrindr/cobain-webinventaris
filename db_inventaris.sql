@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.2
+-- version 5.0.2
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Feb 08, 2020 at 12:04 PM
--- Server version: 10.1.43-MariaDB-0ubuntu0.18.04.1
--- PHP Version: 7.3.14-5+ubuntu18.04.1+deb.sury.org+2
+-- Generation Time: Sep 30, 2020 at 02:29 PM
+-- Server version: 10.1.44-MariaDB-0ubuntu0.18.04.1
+-- PHP Version: 7.4.10
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -21,6 +20,54 @@ SET time_zone = "+00:00";
 --
 -- Database: `db_inventaris`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `access_log`
+--
+
+CREATE TABLE `access_log` (
+  `tanggal_access` datetime NOT NULL,
+  `ip` varchar(20) NOT NULL,
+  `path` varchar(150) NOT NULL,
+  `methods` varchar(10) NOT NULL,
+  `id_user` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `access_log`
+--
+
+INSERT INTO `access_log` (`tanggal_access`, `ip`, `path`, `methods`, `id_user`) VALUES
+('2020-02-11 20:32:14', '127.0.0.1', 'peminjaman', 'GET', 6),
+('2020-02-12 09:11:01', '127.0.0.1', 'admin-login', 'POST', 6),
+('2020-02-12 09:11:02', '127.0.0.1', 'inventaris', 'GET', 6),
+('2020-02-12 09:11:06', '127.0.0.1', 'peminjaman', 'GET', 6),
+('2020-07-18 18:40:32', '127.0.0.1', 'admin-login', 'POST', 0),
+('2020-07-18 18:40:37', '127.0.0.1', 'admin-login', 'POST', 0),
+('2020-07-18 18:40:43', '127.0.0.1', 'admin-login', 'POST', 6),
+('2020-07-18 18:40:44', '127.0.0.1', 'inventaris', 'GET', 6),
+('2020-07-18 18:40:57', '127.0.0.1', 'inventaris', 'GET', 6),
+('2020-07-18 18:41:05', '127.0.0.1', 'ruang', 'GET', 6),
+('2020-07-18 18:41:17', '127.0.0.1', 'jenis', 'GET', 6),
+('2020-07-18 18:41:21', '127.0.0.1', 'ruang', 'GET', 6),
+('2020-07-18 18:41:24', '127.0.0.1', 'inventaris', 'GET', 6),
+('2020-07-18 18:41:32', '127.0.0.1', 'inventaris', 'GET', 6),
+('2020-07-18 18:42:03', '127.0.0.1', 'peminjaman', 'GET', 6),
+('2020-07-18 18:42:08', '127.0.0.1', 'peminjaman/req-kembali', 'GET', 6),
+('2020-07-18 18:42:11', '127.0.0.1', 'peminjaman/history', 'GET', 6),
+('2020-07-18 18:42:16', '127.0.0.1', 'peminjaman/show-history/28', 'GET', 6),
+('2020-07-18 18:42:25', '127.0.0.1', 'peminjaman/history', 'GET', 6),
+('2020-07-18 18:42:29', '127.0.0.1', 'peminjaman/show-history/28', 'GET', 6),
+('2020-07-18 18:42:32', '127.0.0.1', 'peminjaman/history', 'GET', 6),
+('2020-07-18 18:42:34', '127.0.0.1', 'peminjaman', 'GET', 6),
+('2020-07-18 18:42:38', '127.0.0.1', 'peminjaman/show/29', 'GET', 6),
+('2020-07-18 18:43:08', '127.0.0.1', 'peminjaman', 'GET', 6),
+('2020-07-18 18:43:15', '127.0.0.1', 'peminjaman/acc-pinjam/29', 'GET', 6),
+('2020-07-18 18:43:15', '127.0.0.1', 'peminjaman', 'GET', 6),
+('2020-07-18 18:43:23', '127.0.0.1', 'peminjaman/index-acc-pinjam', 'GET', 6),
+('2020-07-18 18:43:27', '127.0.0.1', 'peminjaman/show/23', 'GET', 6);
 
 -- --------------------------------------------------------
 
@@ -190,7 +237,7 @@ INSERT INTO `peminjaman` (`id`, `tanggal_pinjam`, `tanggal_kembali`, `status_pem
 (26, '2020-02-03', NULL, 0, '2020-02-03 11:36:16', '2020-02-03 11:36:16', 5),
 (27, '2020-02-03', NULL, 0, '2020-02-03 11:47:49', '2020-02-03 11:47:49', 6),
 (28, '2020-02-04', '2020-02-04', 3, '2020-02-04 10:41:49', '2020-02-04 10:41:49', 4),
-(29, '2020-02-04', NULL, 0, '2020-02-04 12:58:51', '2020-02-04 12:58:51', 4);
+(29, '2020-02-04', NULL, 1, '2020-02-04 12:58:51', '2020-02-04 12:58:51', 4);
 
 -- --------------------------------------------------------
 
